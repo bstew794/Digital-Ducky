@@ -1,0 +1,3 @@
+include ':API'
+include ':PhoneApp'
+rootProject.name = "DigitalDucky"

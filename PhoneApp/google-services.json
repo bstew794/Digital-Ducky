@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "366058886249",
+    "project_id": "digitalducky-abd31",
+    "storage_bucket": "digitalducky-abd31.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:366058886249:android:6622d9ee8fa188fdcdbef8",
+        "android_client_info": {
+          "package_name": "com.braedenstewartdigitalduckyproject1.phoneapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "366058886249-gjass6u174nupij2o59hqfllh1g5sl4i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5w-onzmBvhwWqtXX3Pbkd3vSrP1WPY1Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "366058886249-gjass6u174nupij2o59hqfllh1g5sl4i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
