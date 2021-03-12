@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">DigitalDucky</string>
+    <string name="text_field">type here</string>
+    <string name="submit_button">Submit</string>
 </resources>
