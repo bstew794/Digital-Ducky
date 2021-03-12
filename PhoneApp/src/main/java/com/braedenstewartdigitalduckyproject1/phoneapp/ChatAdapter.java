@@ -9,8 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.braedenstewartdigitalduckyproject1.api.CustomAdapter;
 import com.braedenstewartdigitalduckyproject1.api.Message;
 
-import org.w3c.dom.Text;
-
 public class ChatAdapter extends CustomAdapter<Message> {
     public ChatAdapter(ObservableArrayList<Message> data){
         super(data);
