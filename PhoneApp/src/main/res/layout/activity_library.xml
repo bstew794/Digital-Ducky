@@ -20,10 +20,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/thot_train_title" />
+        app:layout_constraintTop_toBottomOf="@+id/add_thot_train_field" />
 
     <EditText
-        android:id="@+id/thot_train_title"
+        android:id="@+id/add_thot_train_field"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -43,6 +43,6 @@
         android:layout_marginTop="4dp"
         android:text="@string/submit_button"
         android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/thot_train_title"
+        app:layout_constraintStart_toEndOf="@+id/add_thot_train_field"
         app:layout_constraintTop_toBottomOf="@+id/welcome_message" />
 </androidx.constraintlayout.widget.ConstraintLayout>
