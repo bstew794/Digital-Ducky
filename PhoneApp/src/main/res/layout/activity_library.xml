@@ -6,4 +6,43 @@
     android:layout_height="match_parent"
     tools:context=".LibraryActivity">
 
+    <TextView
+        android:id="@+id/welcome_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Welcome User!"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/library_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/thot_train_title" />
+
+    <EditText
+        android:id="@+id/thot_train_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:autofillHints="@string/thot_train_title_field"
+        android:ems="10"
+        android:hint="@string/text_field"
+        android:inputType="textPersonName"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcome_message" />
+
+    <Button
+        android:id="@+id/submit_title_butt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/submit_button"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/thot_train_title"
+        app:layout_constraintTop_toBottomOf="@+id/welcome_message" />
 </androidx.constraintlayout.widget.ConstraintLayout>

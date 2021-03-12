@@ -3,4 +3,5 @@
     <string name="text_field">type here</string>
     <string name="message_field">message</string>
     <string name="submit_button">Submit</string>
+    <string name="thot_train_title_field">enter the title of a new thought train here</string>
 </resources>
