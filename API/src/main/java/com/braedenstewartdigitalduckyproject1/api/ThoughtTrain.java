@@ -10,14 +10,24 @@ import java.util.List;
 
 public class ThoughtTrain {
     @Nullable
+    private String title;
     private LocalDateTime publishDate;
     private List<Message> messageList;
     private MutableLiveData<List<Message>> messages;
 
-    public ThoughtTrain(LocalDateTime publishDate){
+    public ThoughtTrain(String title, LocalDateTime publishDate){
+        this.title = title;
         this.publishDate = publishDate;
         this.messageList = new ArrayList<>();
         this.messages = new MutableLiveData<>();
+    }
+    @Nullable
+    public String getTitle(){
+        return title;
+    }
+
+    public void setTitle(@Nullable String title){
+        this.title = title;
     }
 
     @Nullable
