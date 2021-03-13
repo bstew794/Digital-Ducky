@@ -38,6 +38,10 @@ public class ThoughtTrain {
         messages.add(message);
     }
 
+    public void setMessages(@Nullable ArrayList<Message> messages){
+        this.messages = messages;
+    }
+
     @Nullable
     public ArrayList<Message> getMessages(){
         return messages;
