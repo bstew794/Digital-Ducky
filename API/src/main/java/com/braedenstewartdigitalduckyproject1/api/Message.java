@@ -9,10 +9,10 @@ public class Message {
     String author, content;
     LocalDateTime publishDate;
 
-    public Message(String author, String content){
+    public Message(String author, String content, LocalDateTime publishDate){
         this.author = author;
         this.content = content;
-        this.publishDate = LocalDateTime.now();
+        this.publishDate = publishDate;
     }
 
     @Nullable
@@ -38,7 +38,7 @@ public class Message {
         return publishDate;
     }
 
-    public void setPublishDate(){
-        this.publishDate = LocalDateTime.now();
+    public void setPublishDate(LocalDateTime publishDate){
+        this.publishDate = publishDate;
     }
 }

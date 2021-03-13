@@ -1,25 +1,20 @@
 package com.braedenstewartdigitalduckyproject1.api;
 
 import androidx.annotation.Nullable;
-import androidx.databinding.BaseObservable;
-import androidx.lifecycle.MutableLiveData;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ThoughtTrain {
     @Nullable
     private String title;
     private LocalDateTime publishDate;
-    private List<Message> messageList;
-    private MutableLiveData<List<Message>> messages;
+    private ArrayList<Message> messages;
 
     public ThoughtTrain(String title, LocalDateTime publishDate){
         this.title = title;
         this.publishDate = publishDate;
-        this.messageList = new ArrayList<>();
-        this.messages = new MutableLiveData<>();
+        this.messages = new ArrayList<>();
     }
     @Nullable
     public String getTitle(){
@@ -40,11 +35,11 @@ public class ThoughtTrain {
     }
 
     public void addMessage(@Nullable Message message){
-        messageList.add(message);
+        messages.add(message);
     }
 
     @Nullable
-    public MutableLiveData<List<Message>> getMessages(){
+    public ArrayList<Message> getMessages(){
         return messages;
     }
 }
