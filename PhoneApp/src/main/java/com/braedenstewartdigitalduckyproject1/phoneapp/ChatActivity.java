@@ -17,8 +17,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.time.LocalDateTime;
 
 public class ChatActivity extends AppCompatActivity {
-    DatabaseReference DB;
-    FirebaseHelper helper;
     ChatAdapter adapter;
     RecyclerView rv;
     EditText addMessageField;
@@ -36,16 +34,12 @@ public class ChatActivity extends AppCompatActivity {
         rv = findViewById(R.id.chat_rv);
         rv.setLayoutManager(new LinearLayoutManager(this));
 
-        DB = FirebaseDatabase.getInstance().getReference();
-        helper = new FirebaseHelper(DB);
-
-        //retrieve Data set from database
+        //retrieve Data set from viewmodel
+        adapter = new ChatAdapter(null); // TODO: change this
 
         rv.setAdapter(adapter);
 
         submitButt.setOnClickListener(view -> {
-            String author = null; // get username
-            LocalDateTime publishDate = LocalDateTime.now()
             String content = addMessageField.getText().toString();
 
             if (false){

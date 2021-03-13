@@ -51,6 +51,8 @@ public class ChatViewModel extends ViewModel {
     }
 
     public void addMessage(String author, String content, LocalDateTime publishDate){
+        Message message = new Message(author, content, publishDate);
 
+        thotTrain.addMessage(message);
     }
 }
