@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.braedenstewartdigitalduckyproject1.api.ChatViewModel;
 import com.braedenstewartdigitalduckyproject1.api.FirebaseHelper;
 import com.braedenstewartdigitalduckyproject1.api.Message;
 import com.google.firebase.database.DatabaseReference;
@@ -21,6 +22,7 @@ public class ChatActivity extends AppCompatActivity {
     RecyclerView rv;
     EditText addMessageField;
     Button submitButt;
+    ChatViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,19 +37,29 @@ public class ChatActivity extends AppCompatActivity {
         rv.setLayoutManager(new LinearLayoutManager(this));
 
         //retrieve Data set from viewmodel
-        adapter = new ChatAdapter(null); // TODO: change this
+        adapter = new ChatAdapter(viewModel.getMessages()); // TODO: change this
 
         rv.setAdapter(adapter);
 
         submitButt.setOnClickListener(view -> {
             String content = addMessageField.getText().toString();
 
-            if (false){
-                Toast.makeText(ChatActivity.this,
-                        "you cannot enter nothing", Toast.LENGTH_SHORT)
+            if (content != null && content.length() > 0){
+                if (viewModel.submitMessage(addMessageField)){
+                    addMessageField.getText().clear();
+                }
+                else{
+                    Toast.makeText(ChatActivity.this,
+                            "message was not successfully submitted",
+                            Toast.LENGTH_SHORT)
+                            .show();
+                }
+            }
+            else{
+                Toast.makeText(ChatActivity.this, "You cannot submit an empty message",
+                        Toast.LENGTH_SHORT)
                         .show();
             }
         });
-
     }
 }

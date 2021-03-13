@@ -7,16 +7,20 @@ import androidx.lifecycle.ViewModel;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class ChatViewModel extends ViewModel {
+    private String TAG = "ChatActivity";
+    private FirebaseHelper helper;
     private ThoughtTrain thotTrain;
     MutableLiveData<ArrayList<Message>> messageLiveData;
 
     public ChatViewModel(){
         messageLiveData = new MutableLiveData<>();
+        helper = new FirebaseHelper(FirebaseDatabase.getInstance().getReference());
         init();
     }
 
@@ -34,15 +38,15 @@ public class ChatViewModel extends ViewModel {
     public boolean submitMessage(EditText textField){
         String content = textField.getText().toString();
 
-        if (content != null && content.length() > 0){
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-            String author = user.getDisplayName();
-            LocalDateTime publishDate = LocalDateTime.now();
+        String author = user.getDisplayName();
+        LocalDateTime publishDate = LocalDateTime.now();
 
-            addMessage(author, content, publishDate);
-            addMessage("Ducky", "TODO", LocalDateTime.now());
+        addMessage(author, content, publishDate);
+        addMessage("Ducky", "TODO", LocalDateTime.now());
 
+        if (helper.saveThotTrain(TAG, thotTrain, user)){
             return true;
         }
         else{
@@ -54,5 +58,9 @@ public class ChatViewModel extends ViewModel {
         Message message = new Message(author, content, publishDate);
 
         thotTrain.addMessage(message);
+    }
+
+    public ArrayList<Message> getMessages(){
+        return thotTrain.getMessages();
     }
 }
