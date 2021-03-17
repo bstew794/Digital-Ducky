@@ -9,12 +9,8 @@ public class ThoughtTrain {
     @Nullable
     private String title;
     private LocalDateTime publishDate;
-    private ArrayList<Message> messages;
 
-    public ThoughtTrain(String title, LocalDateTime publishDate){
-        this.title = title;
-        this.publishDate = publishDate;
-        this.messages = new ArrayList<>();
+    public ThoughtTrain(){
     }
     @Nullable
     public String getTitle(){
@@ -32,18 +28,5 @@ public class ThoughtTrain {
 
     public void setPublishDate(@Nullable LocalDateTime publishDate){
         this.publishDate = publishDate;
-    }
-
-    public void addMessage(@Nullable Message message){
-        messages.add(message);
-    }
-
-    public void setMessages(@Nullable ArrayList<Message> messages){
-        this.messages = messages;
-    }
-
-    @Nullable
-    public ArrayList<Message> getMessages(){
-        return messages;
     }
 }
