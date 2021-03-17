@@ -55,9 +55,6 @@ public class ChatViewModel extends BaseObservable {
         if(!helper.saveMessage(TAG, duckyMess, thotId)){
             return "Ducky failed to respond";
         }
-        messageData.add(message);
-        messageData.add(duckyMess);
-
         notifyPropertyChanged(BR.messageData);
         return "";
     }

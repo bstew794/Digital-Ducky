@@ -78,6 +78,8 @@ public class ChatActivity extends AppCompatActivity {
         chatViewModel.tearDown();
 
         submitButt.setOnClickListener(null);
+        pushToTalk.setOnClickListener(null);
+        returnToLib.setOnClickListener(null);
     }
 
     private View bind(){

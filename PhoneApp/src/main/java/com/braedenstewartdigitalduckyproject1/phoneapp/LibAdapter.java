@@ -73,4 +73,9 @@ public class LibAdapter extends CustomAdapter<ThoughtTrain>{
             holder.getItemView().getContext().startActivity(intent);
         });
     }
+
+    @Override
+    public void onViewRecycled(@NonNull ViewHolder holder){
+        holder.getItemView().findViewById(R.id.thot_train_con).setOnClickListener(null);
+    }
 }

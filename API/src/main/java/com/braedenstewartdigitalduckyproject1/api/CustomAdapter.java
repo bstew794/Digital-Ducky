@@ -55,6 +55,9 @@ public abstract class CustomAdapter<T> extends RecyclerView.Adapter<CustomAdapte
     @Override
     public abstract void onBindViewHolder(@NonNull ViewHolder holder, int position);
 
+    @Override
+    public abstract void onViewRecycled(@NonNull ViewHolder holder);
+
 
     @Override
     public int getItemCount() {
