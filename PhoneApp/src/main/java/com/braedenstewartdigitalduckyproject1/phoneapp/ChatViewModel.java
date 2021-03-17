@@ -1,7 +1,5 @@
 package com.braedenstewartdigitalduckyproject1.phoneapp;
 
-import android.content.Context;
-
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.databinding.ObservableArrayList;
@@ -23,12 +21,15 @@ public class ChatViewModel extends BaseObservable {
         messageData = new ObservableArrayList<>();
         helper = new FirebaseHelper();
         adapter = new ChatAdapter(messageData);
+
+        notifyPropertyChanged(BR.adapter);
     }
 
     public void setUp(String title, String id){
         chatTitle = title;
         thotId = id;
 
+        notifyPropertyChanged(BR.chatTitle);
         populateData();
     }
 
@@ -54,7 +55,10 @@ public class ChatViewModel extends BaseObservable {
         if(!helper.saveMessage(TAG, duckyMess, thotId)){
             return "Ducky failed to respond";
         }
+        messageData.add(message);
+        messageData.add(duckyMess);
 
+        notifyPropertyChanged(BR.messageData);
         return "";
     }
 
@@ -76,6 +80,7 @@ public class ChatViewModel extends BaseObservable {
     private void populateData(){
         helper.retrieveMesses(()->adapter.notifyDataSetChanged(), thotId);
         messageData = (ObservableArrayList<Message>) helper.getLocalMesses();
-        //notifyPropertyChanged(BR.);
+
+        notifyPropertyChanged(BR.messageData);
     }
 }

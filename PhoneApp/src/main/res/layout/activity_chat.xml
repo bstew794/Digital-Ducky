@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:autofillHints="@string/message_field"
-            android:ems="14"
+            android:ems="11"
             android:hint="@string/text_field"
             android:inputType="textLongMessage"
             android:textSize="18sp"
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:text="@string/submit_button"
             android:textSize="18sp"
-            app:layout_constraintStart_toEndOf="@+id/add_message_field"
+            app:layout_constraintStart_toEndOf="@+id/push_to_talk"
             app:layout_constraintTop_toBottomOf="@+id/chat_title" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -54,7 +54,7 @@
             app:layout_constraintTop_toBottomOf="@+id/add_message_field" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton"
+            android:id="@+id/return_to_lib_butt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="32dp"
@@ -64,6 +64,15 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@android:drawable/ic_menu_revert" />
+
+        <ImageButton
+            android:id="@+id/push_to_talk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="Button to activate speech to text"
+            app:layout_constraintStart_toEndOf="@+id/add_message_field"
+            app:layout_constraintTop_toBottomOf="@+id/chat_title"
+            app:srcCompat="@android:drawable/ic_btn_speak_now" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

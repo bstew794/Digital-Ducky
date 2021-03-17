@@ -10,13 +10,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.braedenstewartdigitalduckyproject1.phoneapp.databinding.ActivityChatBinding;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ChatActivity extends AppCompatActivity {
     EditText addMessageField;
     Button submitButt;
+    ImageButton pushToTalk;
+    FloatingActionButton returnToLib;
     ChatViewModel chatViewModel;
 
     @Override
@@ -31,11 +35,13 @@ public class ChatActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
 
-        chatViewModel.setUp(getIntent().getStringExtra("1"),
-                getIntent().getStringExtra("2"));
+        chatViewModel.setUp(getIntent().getStringExtra("TITLE"),
+                getIntent().getStringExtra("ID"));
 
         addMessageField = findViewById(R.id.add_message_field);
         submitButt = findViewById(R.id.submit_message_butt);
+        pushToTalk = findViewById(R.id.push_to_talk);
+        returnToLib = findViewById(R.id.return_to_lib_butt);
 
         submitButt.setOnClickListener(view -> {
             String content = addMessageField.getText().toString();
@@ -55,6 +61,14 @@ public class ChatActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT)
                         .show();
             }
+        });
+
+        pushToTalk.setOnClickListener(view -> {
+            // TODO: set up speech-to-text API
+        });
+
+        returnToLib.setOnClickListener(view ->{
+            //TODO: set up call to library activity
         });
     }
 
