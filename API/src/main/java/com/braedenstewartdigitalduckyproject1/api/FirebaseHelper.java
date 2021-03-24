@@ -1,9 +1,13 @@
 package com.braedenstewartdigitalduckyproject1.api;
 
+import android.app.Activity;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -18,19 +22,23 @@ import java.util.ArrayList;
 
 public class FirebaseHelper {
     private DatabaseReference myDB;
+    private FirebaseAuth myAuth;
     private FirebaseUser user;
     private ArrayList<ThoughtTrain> localThots;
     private ArrayList<Message> localMesses;
     private ArrayList<String> thotKeys;
     private ArrayList<String> messKeys;
+    private boolean loginSuccess;
 
     public FirebaseHelper(){
         this.myDB = FirebaseDatabase.getInstance().getReference();
-        this.user = FirebaseAuth.getInstance().getCurrentUser();
+        this.myAuth = FirebaseAuth.getInstance();
+        this.user = myAuth.getCurrentUser();
         this.localThots = new ArrayList<>();
         this.localMesses = new ArrayList<>();
         this.thotKeys = new ArrayList<>();
         this.messKeys = new ArrayList<>();
+        this.loginSuccess = false;
     }
 
     public boolean saveThotTrain(String TAG, ThoughtTrain thotTrain){
@@ -66,6 +74,19 @@ public class FirebaseHelper {
                 return false;
             }
         }
+    }
+
+    public void login(Activity activity, String email, String password){
+        myAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(activity, task -> {
+                    if (task.isSuccessful()){
+                        user = myAuth.getCurrentUser();
+                        loginSuccess = true;
+                    }
+                    else{
+                        loginSuccess = false;
+                    }
+                });
     }
 
     public interface OnDataChangedCallback{
@@ -122,6 +143,10 @@ public class FirebaseHelper {
 
     public ArrayList<String> getMessKeys(){
         return messKeys;
+    }
+
+    public boolean isLoginSuccess() {
+        return loginSuccess;
     }
 
     private void fetchThotData(DataSnapshot snapshot){
