@@ -2,7 +2,6 @@ package com.braedenstewartdigitalduckyproject1.phoneapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ObservableArrayList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -72,7 +71,7 @@ public class LibAcitivity extends AppCompatActivity {
         });
 
         logoutButt.setOnClickListener(view -> {
-            libViewModel.signOut();
+            libViewModel.logout();
 
             Intent intent = new Intent(this, LoginActivity.class);
 

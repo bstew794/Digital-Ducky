@@ -91,7 +91,11 @@ public class FirebaseHelper {
                 });
     }
 
-    public void signOut(){
+    public void signUp(String email, String username, String password){
+
+    }
+
+    public void logout(){
         myAuth.signOut();
     }
 

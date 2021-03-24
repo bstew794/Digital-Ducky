@@ -6,6 +6,8 @@
     <string name="thot_train_title_field">enter the title of a new thought train here</string>
     <string name="email_text">Email</string>
     <string name="password_text">Password</string>
+    <string name="password_confirm_text">Confirm Password</string>
+    <string name="username_text">Username</string>
     <string name="login_button">Login</string>
     <string name="sign_up_button">Sign Up</string>
 </resources>

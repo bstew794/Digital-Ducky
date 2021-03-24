@@ -46,8 +46,8 @@ public class LibViewModel extends BaseObservable {
         return "";
     }
 
-    public void signOut(){
-        helper.signOut();
+    public void logout(){
+        helper.logout();
     }
 
     @Bindable
