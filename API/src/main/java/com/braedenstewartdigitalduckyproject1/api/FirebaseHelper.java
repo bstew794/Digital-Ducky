@@ -80,13 +80,19 @@ public class FirebaseHelper {
         myAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(activity, task -> {
                     if (task.isSuccessful()){
+                        Log.d("loginViewModel", "Login succeeded");
                         user = myAuth.getCurrentUser();
                         loginSuccess = true;
                     }
                     else{
+                        Log.d("loginViewModel", "Login failed");
                         loginSuccess = false;
                     }
                 });
+    }
+
+    public void signOut(){
+        myAuth.signOut();
     }
 
     public interface OnDataChangedCallback{

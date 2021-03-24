@@ -7,7 +7,6 @@ import androidx.databinding.BaseObservable;
 import com.braedenstewartdigitalduckyproject1.api.FirebaseHelper;
 
 public class LoginViewModel extends BaseObservable {
-    private static final String TAG = "LoginnViewModel";
     private FirebaseHelper helper;
 
     public LoginViewModel(){

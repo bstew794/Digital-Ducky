@@ -72,7 +72,11 @@ public class LibAcitivity extends AppCompatActivity {
         });
 
         logoutButt.setOnClickListener(view -> {
-            //TODO: implement logout user function
+            libViewModel.signOut();
+
+            Intent intent = new Intent(this, LoginActivity.class);
+
+            startActivity(intent);
         });
     }
 

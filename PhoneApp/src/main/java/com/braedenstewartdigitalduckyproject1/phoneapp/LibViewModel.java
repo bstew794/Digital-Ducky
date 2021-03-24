@@ -46,6 +46,10 @@ public class LibViewModel extends BaseObservable {
         return "";
     }
 
+    public void signOut(){
+        helper.signOut();
+    }
+
     @Bindable
     public ObservableArrayList<ThoughtTrain> getThotData(){
         return this.thotData;
