@@ -21,8 +21,6 @@ public class ChatViewModel extends BaseObservable {
         messageData = new ObservableArrayList<>();
         helper = new FirebaseHelper();
         adapter = new ChatAdapter(messageData);
-
-        notifyPropertyChanged(BR.adapter);
     }
 
     public void setUp(String title, String id){
@@ -55,7 +53,6 @@ public class ChatViewModel extends BaseObservable {
         if(!helper.saveMessage(TAG, duckyMess, thotId)){
             return "Ducky failed to respond";
         }
-        notifyPropertyChanged(BR.messageData);
         return "";
     }
 
@@ -77,7 +74,5 @@ public class ChatViewModel extends BaseObservable {
     private void populateData(){
         helper.retrieveMesses(()->adapter.notifyDataSetChanged(), thotId);
         messageData = (ObservableArrayList<Message>) helper.getLocalMesses();
-
-        notifyPropertyChanged(BR.messageData);
     }
 }

@@ -44,12 +44,10 @@
             app:layout_constraintStart_toEndOf="@+id/push_to_talk"
             app:layout_constraintTop_toBottomOf="@+id/chat_title" />
 
-t        <androidx.recyclerview.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/chat_rv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:adapter="@{viewModel.adapter}"
-            app:data="@{viewModel.messageData}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/add_message_field" />
 

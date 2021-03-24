@@ -13,11 +13,12 @@ import android.widget.Toast;
 
 import com.braedenstewartdigitalduckyproject1.phoneapp.databinding.ActivityLibraryBinding;
 
-public class LibraryActivity extends AppCompatActivity {
+public class libActivity extends AppCompatActivity {
     EditText addThotField;
     Button submitButt;
     Button logoutButt;
     LibViewModel libViewModel;
+    RecyclerView rv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,7 @@ public class LibraryActivity extends AppCompatActivity {
                     addThotField.getText().clear();
                 }
                 else{
-                    Toast.makeText(LibraryActivity.this, toastText, Toast.LENGTH_SHORT)
+                    Toast.makeText(libActivity.this, toastText, Toast.LENGTH_SHORT)
                             .show();
                 }
             }
@@ -77,7 +78,8 @@ public class LibraryActivity extends AppCompatActivity {
     }
 
     private void initRV(View view){
-        RecyclerView rv = view.findViewById(R.id.library_rv);
+        rv = view.findViewById(R.id.library_rv);
         rv.setLayoutManager(new LinearLayoutManager(rv.getContext()));
+        rv.setAdapter(libViewModel.getAdapter());
     }
 }

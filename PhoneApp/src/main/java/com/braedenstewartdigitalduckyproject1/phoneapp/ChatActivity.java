@@ -22,6 +22,7 @@ public class ChatActivity extends AppCompatActivity {
     ImageButton pushToTalk;
     FloatingActionButton returnToLib;
     ChatViewModel chatViewModel;
+    RecyclerView rv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,8 +84,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private View bind(){
-        ActivityChatBinding binding = DataBindingUtil
-                .setContentView(this, R.layout.activity_chat);
+        ActivityChatBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
 
         chatViewModel = new ChatViewModel();
         binding.setViewModel(chatViewModel);
@@ -92,7 +92,8 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void initRV(View view){
-        RecyclerView rv = view.findViewById(R.id.chat_rv);
+        rv = view.findViewById(R.id.chat_rv);
         rv.setLayoutManager(new LinearLayoutManager(rv.getContext()));
+        rv.setAdapter(chatViewModel.getAdapter());
     }
 }

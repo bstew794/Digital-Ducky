@@ -22,8 +22,6 @@ public class LibViewModel extends BaseObservable {
         thotIdData = new ObservableArrayList<>();
         helper = new FirebaseHelper();
         adapter = new LibAdapter(thotData, thotIdData);
-
-        notifyPropertyChanged(BR.adapter);
     }
 
     public void setUp(){
@@ -45,7 +43,6 @@ public class LibViewModel extends BaseObservable {
         if (!helper.saveThotTrain(TAG, thotTrain)){
             return "user thought train failed to reach server";
         }
-        notifyPropertyChanged(BR.thotData);
         return "";
     }
 
@@ -68,7 +65,5 @@ public class LibViewModel extends BaseObservable {
         helper.retrieveThots(()->adapter.notifyDataSetChanged());
         thotData = (ObservableArrayList<ThoughtTrain>) helper.getLocalThots();
         thotIdData = (ObservableArrayList<String>) helper.getThotKeys();
-
-        notifyPropertyChanged(BR.thotData);
     }
 }

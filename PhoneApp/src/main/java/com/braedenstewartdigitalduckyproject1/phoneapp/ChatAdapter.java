@@ -28,4 +28,8 @@ public class ChatAdapter extends CustomAdapter<Message> {
         date.setText(message.getPublishDate().toString());
         content.setText(message.getContent());
     }
+
+    @Override
+    public void onViewRecycled(@NonNull ViewHolder holder){
+    }
 }
