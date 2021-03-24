@@ -2,9 +2,11 @@ package com.braedenstewartdigitalduckyproject1.phoneapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ObservableArrayList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,7 +15,7 @@ import android.widget.Toast;
 
 import com.braedenstewartdigitalduckyproject1.phoneapp.databinding.ActivityLibraryBinding;
 
-public class libActivity extends AppCompatActivity {
+public class LibAcitivity extends AppCompatActivity {
     EditText addThotField;
     Button submitButt;
     Button logoutButt;
@@ -46,11 +48,26 @@ public class libActivity extends AppCompatActivity {
 
                 if (toastText == ""){
                     addThotField.getText().clear();
+
+                    String thotId = libViewModel.getLastThotId();
+
+                    Intent intent = new Intent(this, ChatActivity.class);
+                    Bundle extras = new Bundle();
+                    extras.putString("TITLE", thotTitle);
+                    extras.putString("ID", thotId);
+                    intent.putExtras(extras);
+
+                    startActivity(intent);
                 }
                 else{
-                    Toast.makeText(libActivity.this, toastText, Toast.LENGTH_SHORT)
+                    Toast.makeText(LibAcitivity.this, toastText, Toast.LENGTH_SHORT)
                             .show();
                 }
+            }
+            else{
+                Toast.makeText(LibAcitivity.this, "You cannot submit an empty title",
+                        Toast.LENGTH_SHORT)
+                        .show();
             }
         });
 

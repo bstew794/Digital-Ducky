@@ -51,6 +51,8 @@ public class LibViewModel extends BaseObservable {
         return this.thotData;
     }
 
+    public String getLastThotId(){return this.thotIdData.get(thotIdData.size() - 1);}
+
     @Bindable
     public LibAdapter getAdapter(){
         return this.adapter;

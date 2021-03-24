@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DigitalDucky">
-        <activity android:name=".libActivity"></activity>
+        <activity android:name=".LibAcitivity"></activity>
         <activity android:name=".ChatActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
