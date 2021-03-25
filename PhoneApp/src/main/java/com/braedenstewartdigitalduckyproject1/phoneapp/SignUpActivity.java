@@ -16,6 +16,7 @@ public class SignUpActivity extends AppCompatActivity {
     EditText passwordField;
     EditText confirmPassField;
     Button addUserButt;
+    Button backToLoginButt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,8 @@ public class SignUpActivity extends AppCompatActivity {
         passwordField = findViewById(R.id.sign_up_password);
         confirmPassField = findViewById(R.id.sign_up_password_confirm);
         addUserButt = findViewById(R.id.add_user_butt);
+        backToLoginButt = findViewById(R.id.sign_up_back_butt);
+
 
         addUserButt.setOnClickListener(view ->{
             String email = emailField.getText().toString();
@@ -79,6 +82,12 @@ public class SignUpActivity extends AppCompatActivity {
                 passwordField.getText().clear();
                 confirmPassField.getText().clear();
             }
+        });
+
+        backToLoginButt.setOnClickListener(view ->{
+            Intent intent = new Intent(this, LoginActivity.class);
+
+            startActivity(intent);
         });
     }
 

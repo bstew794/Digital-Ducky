@@ -74,6 +74,11 @@ public class LibViewModel extends BaseObservable {
         return this.welMess;
     }
 
+    @Bindable
+    public boolean isSignedIn(){
+        return helper.isSignedIn();
+    }
+
     private void populateData(){
         helper.retrieveThots(()->adapter.notifyDataSetChanged());
     }

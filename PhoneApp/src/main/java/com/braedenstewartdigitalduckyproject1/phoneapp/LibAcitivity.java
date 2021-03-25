@@ -33,6 +33,12 @@ public class LibAcitivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        if(!libViewModel.isSignedIn()){
+            Intent intent = new Intent(this, LoginActivity.class);
+
+            startActivity(intent);
+        }
         libViewModel.setUp();
 
         addThotField = findViewById(R.id.add_thot_train_field);

@@ -89,6 +89,11 @@ public class ChatViewModel extends BaseObservable {
         return this.chatTitle;
     }
 
+    @Bindable
+    public boolean isSignedIn(){
+        return helper.isSignedIn();
+    }
+
     private void populateData(){
         helper.retrieveMesses(()->adapter.notifyDataSetChanged(), thotId);
     }

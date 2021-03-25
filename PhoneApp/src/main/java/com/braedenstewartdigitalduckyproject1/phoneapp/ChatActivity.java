@@ -52,6 +52,11 @@ public class ChatActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
 
+        if(!chatViewModel.isSignedIn()){
+            Intent intent = new Intent(this, LoginActivity.class);
+
+            startActivity(intent);
+        }
         chatViewModel.setUp(getIntent().getStringExtra("TITLE"),
                 getIntent().getStringExtra("ID"));
 

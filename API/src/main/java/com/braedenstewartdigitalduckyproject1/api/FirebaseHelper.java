@@ -200,6 +200,17 @@ public class FirebaseHelper {
         return messKeys;
     }
 
+    public boolean isSignedIn(){
+        FirebaseUser user = myAuth.getCurrentUser();
+
+        if (user == null){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
     private void fetchThotData(DataSnapshot snapshot){
         localThots.clear();
         thotKeys.clear();
