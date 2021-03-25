@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class ThoughtTrain {
     @Nullable
     private String title;
-    private LocalDateTime publishDate;
+    private String publishDate;
 
     public ThoughtTrain(){
     }
@@ -22,11 +22,11 @@ public class ThoughtTrain {
     }
 
     @Nullable
-    public LocalDateTime getPublishDate(){
+    public String getPublishDate(){
         return publishDate;
     }
 
-    public void setPublishDate(@Nullable LocalDateTime publishDate){
+    public void setPublishDate(@Nullable String publishDate){
         this.publishDate = publishDate;
     }
 }

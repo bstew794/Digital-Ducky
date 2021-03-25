@@ -59,7 +59,7 @@ public class LibAdapter extends CustomAdapter<ThoughtTrain>{
         TextView date = holder.getItemView().findViewById(R.id.thot_pub_date);
         ConstraintLayout con = holder.getItemView().findViewById(R.id.thot_train_con);
         title.setText(thotTrain.getTitle());
-        date.setText(thotTrain.getPublishDate().toString());
+        date.setText(thotTrain.getPublishDate());
 
         con.setOnClickListener(view -> {
             Intent intent = new Intent(holder.getItemView().getContext(), ChatActivity.class);

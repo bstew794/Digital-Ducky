@@ -21,7 +21,7 @@ public class LibViewModel extends BaseObservable {
         thotData = new ObservableArrayList<>();
         thotIdData = new ObservableArrayList<>();
         helper = new FirebaseHelper();
-        adapter = new LibAdapter(thotData, thotIdData);
+        adapter = new LibAdapter(helper.getLocalThots(), helper.getThotKeys());
     }
 
     public void setUp(){
@@ -38,7 +38,7 @@ public class LibViewModel extends BaseObservable {
     public String submitThot(String title){
         ThoughtTrain thotTrain = new ThoughtTrain();
         thotTrain.setTitle(title);
-        thotTrain.setPublishDate(LocalDateTime.now());
+        thotTrain.setPublishDate(LocalDateTime.now().toString());
 
         if (!helper.saveThotTrain(TAG, thotTrain)){
             return "user thought train failed to reach server";
@@ -52,10 +52,12 @@ public class LibViewModel extends BaseObservable {
 
     @Bindable
     public ObservableArrayList<ThoughtTrain> getThotData(){
-        return this.thotData;
+        return helper.getLocalThots();
     }
 
-    public String getLastThotId(){return this.thotIdData.get(thotIdData.size() - 1);}
+    public ObservableArrayList<String> getThotIds(){
+        return helper.getThotKeys();
+    }
 
     @Bindable
     public LibAdapter getAdapter(){
@@ -69,7 +71,5 @@ public class LibViewModel extends BaseObservable {
 
     private void populateData(){
         helper.retrieveThots(()->adapter.notifyDataSetChanged());
-        thotData = (ObservableArrayList<ThoughtTrain>) helper.getLocalThots();
-        thotIdData = (ObservableArrayList<String>) helper.getThotKeys();
     }
 }

@@ -47,16 +47,6 @@ public class LibAcitivity extends AppCompatActivity {
 
                 if (toastText == ""){
                     addThotField.getText().clear();
-
-                    String thotId = libViewModel.getLastThotId();
-
-                    Intent intent = new Intent(this, ChatActivity.class);
-                    Bundle extras = new Bundle();
-                    extras.putString("TITLE", thotTitle);
-                    extras.putString("ID", thotId);
-                    intent.putExtras(extras);
-
-                    startActivity(intent);
                 }
                 else{
                     Toast.makeText(LibAcitivity.this, toastText, Toast.LENGTH_SHORT)

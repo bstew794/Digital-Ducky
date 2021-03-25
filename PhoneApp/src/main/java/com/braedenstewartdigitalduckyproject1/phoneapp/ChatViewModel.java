@@ -8,6 +8,8 @@ import com.braedenstewartdigitalduckyproject1.api.FirebaseHelper;
 import com.braedenstewartdigitalduckyproject1.api.Message;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class ChatViewModel extends BaseObservable {
     private static final String TAG = "ChatViewModel";
@@ -15,12 +17,18 @@ public class ChatViewModel extends BaseObservable {
     private String thotId;
     private FirebaseHelper helper;
     private ChatAdapter adapter;
-    private ObservableArrayList<Message> messageData;
+    private String [] duckyMesses = {"Did you forget a semi-colon?", "Interesting... Tell me more.",
+            "Why do you think that?", "Speak nerdy to me.",
+            "Was the variable cast to the wrong data type?", "Reply hazy, try again.",
+            "Let's walk and talk as you explain this.",
+            "Explain it to me like you would for a toddler, or a college student; they're basically the same.",
+            "Think about coding like catching a slippery weasel.",
+            "This looks worse than I did before plastic surgery",
+            "Got any... kernels?", "Don't worry, just put it on my bill."};
 
     public ChatViewModel(){
-        messageData = new ObservableArrayList<>();
         helper = new FirebaseHelper();
-        adapter = new ChatAdapter(messageData);
+        adapter = new ChatAdapter(helper.getLocalMesses());
     }
 
     public void setUp(String title, String id){
@@ -39,16 +47,19 @@ public class ChatViewModel extends BaseObservable {
         Message message = new Message();
         message.setAuthor(helper.getUsername());
         message.setContent(content);
-        message.setPublishDate(LocalDateTime.now());
+        message.setPublishDate(LocalDateTime.now().toString());
 
         if (!helper.saveMessage(TAG, message, thotId)){
             return "user message failed to reach server";
         }
 
+        int randIndex = new Random().nextInt(duckyMesses.length);
+        String duckyContent = duckyMesses[randIndex];
+
         Message duckyMess = new Message();
         duckyMess.setAuthor("Ducky");
-        duckyMess.setContent("Random message here");
-        duckyMess.setPublishDate(LocalDateTime.now());
+        duckyMess.setContent(duckyContent);
+        duckyMess.setPublishDate(LocalDateTime.now().toString());
 
         if(!helper.saveMessage(TAG, duckyMess, thotId)){
             return "Ducky failed to respond";
@@ -58,7 +69,7 @@ public class ChatViewModel extends BaseObservable {
 
     @Bindable
     public ObservableArrayList<Message> getMessageData(){
-        return this.messageData;
+        return this.helper.getLocalMesses();
     }
 
     @Bindable
@@ -73,6 +84,5 @@ public class ChatViewModel extends BaseObservable {
 
     private void populateData(){
         helper.retrieveMesses(()->adapter.notifyDataSetChanged(), thotId);
-        messageData = (ObservableArrayList<Message>) helper.getLocalMesses();
     }
 }

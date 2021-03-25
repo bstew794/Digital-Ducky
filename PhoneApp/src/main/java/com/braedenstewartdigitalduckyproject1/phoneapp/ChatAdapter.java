@@ -25,7 +25,7 @@ public class ChatAdapter extends CustomAdapter<Message> {
         TextView date = holder.getItemView().findViewById(R.id.date_tv);
         TextView content = holder.getItemView().findViewById(R.id.content_tv);
         author.setText(message.getAuthor());
-        date.setText(message.getPublishDate().toString());
+        date.setText(message.getPublishDate());
         content.setText(message.getContent());
     }
 

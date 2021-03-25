@@ -1,15 +1,16 @@
 package com.braedenstewartdigitalduckyproject1.api;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.ObservableArrayList;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseException;
@@ -18,27 +19,24 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 public class FirebaseHelper {
     private DatabaseReference myDB;
     private FirebaseAuth myAuth;
     private FirebaseUser user;
-    private ArrayList<ThoughtTrain> localThots;
-    private ArrayList<Message> localMesses;
-    private ArrayList<String> thotKeys;
-    private ArrayList<String> messKeys;
-    private boolean loginSuccess;
+    private ObservableArrayList<ThoughtTrain> localThots;
+    private ObservableArrayList<Message> localMesses;
+    private ObservableArrayList<String> thotKeys;
+    private ObservableArrayList<String> messKeys;
 
     public FirebaseHelper(){
         this.myDB = FirebaseDatabase.getInstance().getReference();
         this.myAuth = FirebaseAuth.getInstance();
-        this.user = myAuth.getCurrentUser();
-        this.localThots = new ArrayList<>();
-        this.localMesses = new ArrayList<>();
-        this.thotKeys = new ArrayList<>();
-        this.messKeys = new ArrayList<>();
-        this.loginSuccess = false;
+        this.user = FirebaseAuth.getInstance().getCurrentUser();
+        this.localThots = new ObservableArrayList<>();
+        this.localMesses = new ObservableArrayList<>();
+        this.thotKeys = new ObservableArrayList<>();
+        this.messKeys = new ObservableArrayList<>();
     }
 
     public boolean saveThotTrain(String TAG, ThoughtTrain thotTrain){
@@ -47,7 +45,8 @@ public class FirebaseHelper {
         }
         else{
             try {
-                myDB.child("Users").child(user.getUid()).push().setValue(thotTrain);
+                myDB.child("Users").child(user.getUid()).push().child("ThotTrain")
+                        .setValue(thotTrain);
 
                 return true;
             }
@@ -76,23 +75,60 @@ public class FirebaseHelper {
         }
     }
 
-    public void login(Activity activity, String email, String password){
+    public void login(Activity activity, Class goTo, String email, String password){
         myAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(activity, task -> {
                     if (task.isSuccessful()){
                         Log.d("loginViewModel", "Login succeeded");
-                        user = myAuth.getCurrentUser();
-                        loginSuccess = true;
+                        user = FirebaseAuth.getInstance().getCurrentUser();
+
+                        Intent intent = new Intent(activity, goTo);
+
+                        activity.startActivity(intent);
                     }
                     else{
                         Log.d("loginViewModel", "Login failed");
-                        loginSuccess = false;
+
+                        Toast.makeText(activity, "Email or Password was incorrect",
+                                Toast.LENGTH_LONG).show();
                     }
                 });
     }
 
-    public void signUp(String email, String username, String password){
+    public void signUp(Activity activity, Class goTo, String email, String myUsername, String password){
+        myAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(activity, task -> {
+                   if (task.isSuccessful()){
+                       Log.d("signUpViewModel", "Sign up succeeded");
 
+                       user = FirebaseAuth.getInstance().getCurrentUser();
+
+                       UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest
+                               .Builder().setDisplayName(myUsername).build();
+
+                       user.updateProfile(profileUpdates).addOnCompleteListener(task1 -> {
+                           if (task1.isSuccessful()){
+                               Log.d("signUpViewModel", "Username set");
+
+                               Intent intent = new Intent(activity, goTo);
+
+                               activity.startActivity(intent);
+                           }
+                           else{
+                               Log.d("signUpViewModel", "Username not set");
+
+                               Toast.makeText(activity, "Sign Up failed",
+                                       Toast.LENGTH_LONG).show();
+                           }
+                       });
+                   }
+                   else{
+                       Log.d("signUpViewModel", "Sign up failed");
+
+                       Toast.makeText(activity, "Sign Up failed",
+                               Toast.LENGTH_LONG).show();
+                   }
+                });
     }
 
     public void logout(){
@@ -100,7 +136,7 @@ public class FirebaseHelper {
     }
 
     public interface OnDataChangedCallback{
-        public void onDataChanged();
+        void onDataChanged();
     }
 
     public void retrieveThots(OnDataChangedCallback callback){
@@ -123,7 +159,9 @@ public class FirebaseHelper {
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        snapshot.getValue(ThoughtTrain.class).setPublishDate(LocalDateTime.now());
+                        snapshot.child("ThotTrain").getValue(ThoughtTrain.class)
+                                .setPublishDate(LocalDateTime.now().toString());
+
                         fetchMessData(snapshot.child("Messages"));
                         callback.onDataChanged();
                     }
@@ -139,24 +177,20 @@ public class FirebaseHelper {
         return this.user.getDisplayName();
     }
 
-    public ArrayList<ThoughtTrain> getLocalThots(){
+    public ObservableArrayList<ThoughtTrain> getLocalThots(){
         return localThots;
     }
 
-    public ArrayList<Message> getLocalMesses(){
+    public ObservableArrayList<Message> getLocalMesses(){
         return localMesses;
     }
 
-    public ArrayList<String> getThotKeys(){
+    public ObservableArrayList<String> getThotKeys(){
         return thotKeys;
     }
 
-    public ArrayList<String> getMessKeys(){
+    public ObservableArrayList<String> getMessKeys(){
         return messKeys;
-    }
-
-    public boolean isLoginSuccess() {
-        return loginSuccess;
     }
 
     private void fetchThotData(DataSnapshot snapshot){
@@ -164,7 +198,7 @@ public class FirebaseHelper {
         thotKeys.clear();
 
         for (DataSnapshot ds : snapshot.getChildren()){
-            ThoughtTrain thotTrain = ds.getValue(ThoughtTrain.class);
+            ThoughtTrain thotTrain = ds.child("ThotTrain").getValue(ThoughtTrain.class);
 
             if (thotTrain != null){
                 localThots.add(thotTrain);

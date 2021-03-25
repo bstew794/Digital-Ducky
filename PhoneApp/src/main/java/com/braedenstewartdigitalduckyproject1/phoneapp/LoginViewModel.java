@@ -21,14 +21,7 @@ public class LoginViewModel extends BaseObservable {
 
     }
 
-    public String login(Activity activity, String email, String password){
-        helper.login(activity, email, password);
-
-        if (helper.isLoginSuccess()){
-            return "";
-        }
-        else{
-            return "password and/or email was incorrect";
-        }
+    public void login(Activity activity, Class goTo, String email, String password){
+        helper.login(activity, goTo, email, password);
     }
 }

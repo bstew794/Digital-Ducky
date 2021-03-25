@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 public class Message {
     @Nullable
     String author, content;
-    LocalDateTime publishDate;
+    String publishDate;
 
     public Message(){
     }
@@ -31,11 +31,11 @@ public class Message {
     }
 
     @Nullable
-    public LocalDateTime getPublishDate() {
+    public String getPublishDate() {
         return publishDate;
     }
 
-    public void setPublishDate(@Nullable LocalDateTime publishDate){
+    public void setPublishDate(@Nullable String publishDate){
         this.publishDate = publishDate;
     }
 }

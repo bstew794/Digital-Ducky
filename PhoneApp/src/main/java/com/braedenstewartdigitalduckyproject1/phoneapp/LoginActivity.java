@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -38,19 +37,11 @@ public class LoginActivity extends AppCompatActivity {
             String password = passwordField.getText().toString();
 
             if ((email != null && email.length() > 0)&&(password != null && password.length() > 0)){
-                String toastText = loginViewModel.login(LoginActivity.this, email, password);
+                loginViewModel.login(LoginActivity.this, LibAcitivity.class,
+                        email, password);
 
-                if (toastText == ""){
-                    emailField.getText().clear();
-                    passwordField.getText().clear();
-
-                    Intent intent = new Intent(this, LibAcitivity.class);
-
-                    startActivity(intent);
-                }
-                else{
-                    Toast.makeText(getBaseContext(), toastText, Toast.LENGTH_SHORT).show();
-                }
+                emailField.getText().clear();
+                passwordField.getText().clear();
             }
             else{
                 Toast.makeText(getBaseContext(), "Email or password field was empty",

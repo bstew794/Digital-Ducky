@@ -51,18 +51,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/add_message_field" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/return_to_lib_butt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
-            android:layout_marginBottom="32dp"
-            android:contentDescription="Button to return to library activity"
-            android:clickable="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_revert" />
-
         <ImageButton
             android:id="@+id/push_to_talk"
             android:layout_width="wrap_content"

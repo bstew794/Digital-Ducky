@@ -5,7 +5,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,7 +19,6 @@ public class ChatActivity extends AppCompatActivity {
     EditText addMessageField;
     Button submitButt;
     ImageButton pushToTalk;
-    FloatingActionButton returnToLib;
     ChatViewModel chatViewModel;
     RecyclerView rv;
 
@@ -42,13 +40,12 @@ public class ChatActivity extends AppCompatActivity {
         addMessageField = findViewById(R.id.add_message_field);
         submitButt = findViewById(R.id.submit_message_butt);
         pushToTalk = findViewById(R.id.push_to_talk);
-        returnToLib = findViewById(R.id.return_to_lib_butt);
 
         submitButt.setOnClickListener(view -> {
             String content = addMessageField.getText().toString();
 
             if (content != null && content.length() > 0){
-                String toastText = chatViewModel.submitMessage(addMessageField.toString());
+                String toastText = chatViewModel.submitMessage(content);
 
                 if (toastText == ""){
                     addMessageField.getText().clear();
@@ -67,10 +64,6 @@ public class ChatActivity extends AppCompatActivity {
         pushToTalk.setOnClickListener(view -> {
             // TODO: set up speech-to-text API
         });
-
-        returnToLib.setOnClickListener(view ->{
-            //TODO: set up call to library activity
-        });
     }
 
     @Override
@@ -80,7 +73,6 @@ public class ChatActivity extends AppCompatActivity {
 
         submitButt.setOnClickListener(null);
         pushToTalk.setOnClickListener(null);
-        returnToLib.setOnClickListener(null);
     }
 
     private View bind(){
