@@ -19,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class FirebaseHelper {
     private DatabaseReference myDB;
@@ -159,8 +160,14 @@ public class FirebaseHelper {
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        DateTimeFormatter pubDateFormater = DateTimeFormatter
+                                .ofPattern("MM-dd-yyyy HH:mm:ss");
+
+                        LocalDateTime pubDate = LocalDateTime.now();
+                        String pubDateStr = pubDate.format(pubDateFormater);
+
                         snapshot.child("ThotTrain").getValue(ThoughtTrain.class)
-                                .setPublishDate(LocalDateTime.now().toString());
+                                .setPublishDate(pubDateStr);
 
                         fetchMessData(snapshot.child("Messages"));
                         callback.onDataChanged();

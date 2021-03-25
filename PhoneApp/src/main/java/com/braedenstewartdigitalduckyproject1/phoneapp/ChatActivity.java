@@ -12,7 +12,6 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
@@ -22,21 +21,23 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.braedenstewartdigitalduckyproject1.phoneapp.databinding.ActivityChatBinding;
 
-import java.util.Locale;
+import java.util.ArrayList;
 
 public class ChatActivity extends AppCompatActivity {
-    public static final Integer recordAudioRequestCode = 1;
+    private static final int RECORD_AUDIO_REQUEST_CODE = 100;
     EditText addMessageField;
     Button submitButt;
-    ImageView pushToTalk;
+    Button menuButt;
+    ImageButton pushToTalk;
     ChatViewModel chatViewModel;
     RecyclerView rv;
     SpeechRecognizer sr;
+    private Intent srIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +46,6 @@ public class ChatActivity extends AppCompatActivity {
         View view = bind();
 
         initRV(view);
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
-                != PackageManager.PERMISSION_GRANTED){
-
-            checkPermission();
-        }
-        sr.createSpeechRecognizer(this);
     }
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -63,13 +57,16 @@ public class ChatActivity extends AppCompatActivity {
 
         addMessageField = findViewById(R.id.add_message_field);
         submitButt = findViewById(R.id.submit_message_butt);
+        menuButt = findViewById(R.id.to_lib_butt);
         pushToTalk = findViewById(R.id.push_to_talk);
+        pushToTalk.setImageResource(R.drawable.ic_mic_off);
+        sr = SpeechRecognizer.createSpeechRecognizer(getBaseContext());
 
-        final Intent srIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        srIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        srIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, "US-en");
         srIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-
-        srIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        srIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 3);
 
         sr.setRecognitionListener(new RecognitionListener() {
             @Override
@@ -80,7 +77,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onBeginningOfSpeech() {
                 addMessageField.getText().clear();
-                addMessageField.setHint("@string/listening");
+                addMessageField.setHint("Listening...");
             }
 
             @Override
@@ -100,31 +97,24 @@ public class ChatActivity extends AppCompatActivity {
 
             @Override
             public void onError(int error) {
-                Log.e("speech Recognizer", "Error code of " + error);
+                Log.e("Speech Recognizer",
+                        "Error code of " + error);
+
+                pushToTalk.setImageResource(R.drawable.ic_mic_off);
+                addMessageField.setHint("type here");
             }
 
             @Override
             public void onResults(Bundle results) {
+                ArrayList<String> matches = results.getStringArrayList(sr.RESULTS_RECOGNITION);
+                String text = "";
+
+                for (String result : matches){
+                    text = result;
+                }
                 pushToTalk.setImageResource(R.drawable.ic_mic_off);
-                String content = results.getString(SpeechRecognizer.RESULTS_RECOGNITION);
-
-                if (content != null && content.length() > 0){
-                    String toastText = chatViewModel.submitMessage(content);
-
-                    if (toastText == ""){
-                        addMessageField.getText().clear();
-                        addMessageField.setHint("@string/text_field");
-                    }
-                    else{
-                        Toast.makeText(ChatActivity.this, toastText, Toast.LENGTH_SHORT)
-                                .show();
-                    }
-                }
-                else{
-                    Toast.makeText(ChatActivity.this,
-                            "You cannot submit an empty message", Toast.LENGTH_SHORT)
-                            .show();
-                }
+                addMessageField.setText(text);
+                addMessageField.setHint("type here");
             }
 
             @Override
@@ -144,18 +134,24 @@ public class ChatActivity extends AppCompatActivity {
             if (content != null && content.length() > 0){
                 String toastText = chatViewModel.submitMessage(content);
 
-                if (toastText == ""){
+                if (toastText.equals("")){
                     addMessageField.getText().clear();
                 }
                 else{
-                    Toast.makeText(ChatActivity.this, toastText, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), toastText, Toast.LENGTH_SHORT).show();
                 }
             }
             else{
-                Toast.makeText(ChatActivity.this, "You cannot submit an empty message",
+                Toast.makeText(getBaseContext(), "You cannot submit an empty message",
                         Toast.LENGTH_SHORT)
                         .show();
             }
+        });
+
+        menuButt.setOnClickListener(view ->{
+            Intent intent = new Intent(this, LibAcitivity.class);
+
+            startActivity(intent);
         });
 
         pushToTalk.setOnTouchListener((v, event) -> {
@@ -163,8 +159,17 @@ public class ChatActivity extends AppCompatActivity {
                 sr.stopListening();
             }
             if (event.getAction() == MotionEvent.ACTION_DOWN){
-                pushToTalk.setImageResource(R.drawable.ic_mic_on);
-                sr.startListening(srIntent);
+                if (ContextCompat.checkSelfPermission(getBaseContext(),
+                        Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED){
+
+                    ActivityCompat.requestPermissions(this,
+                            new String[]{Manifest.permission.RECORD_AUDIO},
+                            RECORD_AUDIO_REQUEST_CODE);
+                }
+                else{
+                    pushToTalk.setImageResource(R.drawable.ic_mic_on);
+                    sr.startListening(srIntent);
+                }
             }
             return false;
         });
@@ -176,14 +181,18 @@ public class ChatActivity extends AppCompatActivity {
         chatViewModel.tearDown();
 
         submitButt.setOnClickListener(null);
+        menuButt.setOnClickListener(null);
         pushToTalk.setOnClickListener(null);
         sr.setRecognitionListener(null);
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        sr.destroy();
+    protected void onStop(){
+        super.onStop();
+
+        if (sr != null){
+            sr.destroy();
+        }
     }
 
     private View bind(){
@@ -200,22 +209,21 @@ public class ChatActivity extends AppCompatActivity {
         rv.setAdapter(chatViewModel.getAdapter());
     }
 
-    private void checkPermission(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.RECORD_AUDIO}, recordAudioRequestCode);
-        }
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults){
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (requestCode == recordAudioRequestCode && grantResults.length > 0){
+        if (requestCode == RECORD_AUDIO_REQUEST_CODE && grantResults.length > 0){
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "Permission Granted", Toast.LENGTH_SHORT).show();
+
+                pushToTalk.setImageResource(R.drawable.ic_mic_on);
+                sr.startListening(srIntent);
+            }
+            else{
+                Toast.makeText(getBaseContext(), "Permission Denied", Toast.LENGTH_SHORT).show();
             }
         }
     }

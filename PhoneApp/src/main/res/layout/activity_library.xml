@@ -12,13 +12,17 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#BA000000"
         tools:context=".LibAcitivity">
 
         <TextView
             android:id="@+id/welcome_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:text="@{viewModel.welMess}"
+            android:textColor="@android:color/holo_green_light"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -26,7 +30,9 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/library_rv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/add_thot_train_field" />
 
@@ -34,9 +40,11 @@
             android:id="@+id/add_thot_train_field"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:autofillHints="@string/thot_train_title_field"
-            android:ems="10"
+            android:background="#FFFFFF"
+            android:ems="8"
             android:hint="@string/text_field"
             android:inputType="textPersonName"
             android:textSize="24sp"

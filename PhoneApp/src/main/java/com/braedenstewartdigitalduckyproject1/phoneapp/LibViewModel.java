@@ -8,6 +8,7 @@ import com.braedenstewartdigitalduckyproject1.api.FirebaseHelper;
 import com.braedenstewartdigitalduckyproject1.api.ThoughtTrain;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class LibViewModel extends BaseObservable {
     private static final String TAG = "LibViewModel";
@@ -36,9 +37,13 @@ public class LibViewModel extends BaseObservable {
     }
 
     public String submitThot(String title){
+        DateTimeFormatter pubDateFormater = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm:ss");
+        LocalDateTime pubDate = LocalDateTime.now();
+        String pubDateStr = pubDate.format(pubDateFormater);
+
         ThoughtTrain thotTrain = new ThoughtTrain();
         thotTrain.setTitle(title);
-        thotTrain.setPublishDate(LocalDateTime.now().toString());
+        thotTrain.setPublishDate(pubDateStr);
 
         if (!helper.saveThotTrain(TAG, thotTrain)){
             return "user thought train failed to reach server";

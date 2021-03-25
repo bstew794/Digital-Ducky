@@ -11,15 +11,20 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#BA000000">
 
         <TextView
             android:id="@+id/chat_title"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
             android:text="@{viewModel.chatTitle}"
+            android:textColor="@android:color/holo_green_light"
             android:textSize="24sp"
+            app:layout_constraintEnd_toStartOf="@+id/to_lib_butt"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,8 +32,11 @@
             android:id="@+id/add_message_field"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
             android:autofillHints="@string/message_field"
-            android:ems="11"
+            android:background="#FFFFFF"
+            android:ems="9"
             android:hint="@string/text_field"
             android:inputType="textLongMessage"
             android:textSize="18sp"
@@ -39,31 +47,49 @@
             android:id="@+id/submit_message_butt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
             android:text="@string/submit_button"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="@+id/add_message_field"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/push_to_talk"
-            app:layout_constraintTop_toTopOf="@+id/add_message_field" />
+            app:layout_constraintTop_toTopOf="@+id/add_message_field"
+            app:layout_constraintVertical_bias="0.49" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/chat_rv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/add_message_field" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/push_to_talk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
+            android:layout_marginStart="8dp"
+            android:background="@android:color/holo_green_light"
             android:contentDescription="Button to activate speech to text"
-            android:foreground="@drawable/ic_mic_off"
             app:layout_constraintBottom_toBottomOf="@+id/add_message_field"
             app:layout_constraintStart_toEndOf="@+id/add_message_field"
-            app:layout_constraintTop_toBottomOf="@+id/chat_title"
-            app:srcCompat="@drawable/ic_mic_off" />
+            app:layout_constraintTop_toTopOf="@+id/add_message_field" />
+
+        <Button
+            android:id="@+id/to_lib_butt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/menu_button"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/submit_message_butt"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
