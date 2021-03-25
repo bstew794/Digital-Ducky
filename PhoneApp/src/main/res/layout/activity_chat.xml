@@ -39,10 +39,12 @@
             android:id="@+id/submit_message_butt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:text="@string/submit_button"
             android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/add_message_field"
             app:layout_constraintStart_toEndOf="@+id/push_to_talk"
-            app:layout_constraintTop_toBottomOf="@+id/chat_title" />
+            app:layout_constraintTop_toTopOf="@+id/add_message_field" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/chat_rv"
@@ -51,14 +53,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/add_message_field" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/push_to_talk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
             android:contentDescription="Button to activate speech to text"
+            android:foreground="@drawable/ic_mic_off"
+            app:layout_constraintBottom_toBottomOf="@+id/add_message_field"
             app:layout_constraintStart_toEndOf="@+id/add_message_field"
             app:layout_constraintTop_toBottomOf="@+id/chat_title"
-            app:srcCompat="@android:drawable/ic_btn_speak_now" />
+            app:srcCompat="@drawable/ic_mic_off" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
