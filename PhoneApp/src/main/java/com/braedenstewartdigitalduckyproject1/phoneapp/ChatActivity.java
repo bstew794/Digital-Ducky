@@ -112,11 +112,8 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onResults(Bundle results) {
                 ArrayList<String> matches = results.getStringArrayList(sr.RESULTS_RECOGNITION);
-                String text = "";
+                String text = matches.get(0);
 
-                for (String result : matches){
-                    text = result;
-                }
                 pushToTalk.setImageResource(R.drawable.ic_mic_off);
                 addMessageField.setText(text);
                 addMessageField.setHint("type here");

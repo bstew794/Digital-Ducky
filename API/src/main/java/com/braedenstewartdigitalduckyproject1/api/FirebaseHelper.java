@@ -3,9 +3,11 @@ package com.braedenstewartdigitalduckyproject1.api;
 import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.databinding.ObservableArrayList;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -76,7 +78,11 @@ public class FirebaseHelper {
         }
     }
 
-    public void login(Activity activity, Class goTo, String email, String password){
+    public void login(Activity activity, Class goTo, String email, String password,
+                      ConstraintLayout progLay){
+
+        progLay.setVisibility(View.VISIBLE);
+
         myAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(activity, task -> {
                     if (task.isSuccessful()){
@@ -93,6 +99,7 @@ public class FirebaseHelper {
                         Toast.makeText(activity, "Email or Password was incorrect",
                                 Toast.LENGTH_LONG).show();
                     }
+                    progLay.setVisibility(View.INVISIBLE);
                 });
     }
 

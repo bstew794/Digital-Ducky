@@ -9,7 +9,8 @@
     <string name="password_confirm_text">Confirm Password</string>
     <string name="username_text">Username</string>
     <string name="login_button">Login</string>
-    <string name="sign_up_button">Sign Up</string>
+    <string name="signup_text">Sign Up</string>
     <string name="menu_button">Menu</string>
-    <string name="to_login">To Login</string>
+    <string name="to_login">To Login Screen</string>
+    <string name="wait_mess">Logging you in, please wait</string>
 </resources>

@@ -29,12 +29,12 @@ public class SignUpActivity extends AppCompatActivity {
         super.onResume();
 
         signUpViewModel = new SignUpViewModel();
-        emailField = findViewById(R.id.sign_up_email);
-        usernameField = findViewById(R.id.sign_up_username);
-        passwordField = findViewById(R.id.sign_up_password);
-        confirmPassField = findViewById(R.id.sign_up_password_confirm);
+        emailField = findViewById(R.id.signup_email_field);
+        usernameField = findViewById(R.id.signup_username);
+        passwordField = findViewById(R.id.signup_password);
+        confirmPassField = findViewById(R.id.signup_pass_confirm);
         addUserButt = findViewById(R.id.add_user_butt);
-        backToLoginButt = findViewById(R.id.sign_up_back_butt);
+        backToLoginButt = findViewById(R.id.signup_back_butt);
 
 
         addUserButt.setOnClickListener(view ->{
